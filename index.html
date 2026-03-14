@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shaolin TCM & Martial Arts - Global Edition</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .user-menu {
+      position: relative;
+      display: inline-block;
+    }
+
+    .user-btn {
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .user-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: #fff;
+      min-width: 180px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+    }
+
+    .user-dropdown a {
+      display: block;
+      padding: 12px 18px;
+      color: #333 !important;
+      font-size: 14px;
+    }
+
+    .user-dropdown a:hover {
+      background: #f5f5f5;
+    }
+
+    .user-menu:hover .user-dropdown {
+      display: block;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* 头部导航 */
+    header {
+      background: #0f172a;
+      color: #fff;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f97316;
+    }
+
+    .nav-main {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-main a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-main a:hover {
+      color: #f97316;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-actions a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .cart-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* 首屏轮播 */
+    .hero-carousel {
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .carousel-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .carousel-item.active {
+      opacity: 1;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .carousel-caption {
+      position: absolute;
+      bottom: 60px;
+      left: 60px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+    }
+
+    .carousel-caption h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .carousel-caption p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: #f97316;
+      color: #fff;
+      padding: 12px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: #ea580c;
+    }
+
+    /* 商品分类 */
+    .categories {
+      padding: 80px 0;
+      background: #fff;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 60px;
+      color: #0f172a;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #f97316;
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .category-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s;
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .category-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .image-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hover-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .category-card:hover .hover-img {
+      opacity: 1;
+    }
+
+    .category-card:hover .category-img:not(.hover-img) {
+      opacity: 0;
+    }
+
+    .category-content {
+      padding: 25px;
+      text-align: center;
+    }
+
+    .category-content h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #0f172a;
+    }
+
+    .category-content p {
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+
+    /* 热门推荐（站式+坐式八段锦 · 无价格） */
+    .hot-recommend {
+      padding: 70px 0;
+      background: #f8f9fa;
+    }
+
+    .hot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .hot-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    }
+
+    .hot-card img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+    }
+
+    .hot-info {
+      padding: 22px;
+    }
+
+    .hot-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #0f172a;
+    }
+
+    .hot-desc {
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    /* 区域特点板块 */
+    .regional-insights {
+      padding: 80px 0;
+      background: #fff;
+    }
+
+    .country-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    }
+
+    .country-card h3 {
+      font-size: 26px;
+      color: #0f172a;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .country-card h3 i {
+      color: #f97316;
+      margin-right: 12px;
+      font-size: 28px;
+    }
+
+    .country-card h4 {
+      font-size: 20px;
+      color: #ea580c;
+      margin: 25px 0 15px;
+    }
+
+    .country-card p {
+      margin-bottom: 12px;
+      color: #475569;
+    }
+
+    .feature-list {
+      padding-left: 20px;
+      margin: 15px 0;
+    }
+
+    .feature-list li {
+      margin-bottom: 8px;
+      color: #334155;
+    }
+
+    /* 页脚 */
+    footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 60px 0 30px;
+    }
+
+    .footer-wrap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h4 {
+      font-size: 18px;
+      color: #fff;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: #f97316;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-col ul li a:hover {
+      color: #f97316;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: #fff;
+      transition: background 0.3s;
+    }
+
+    .social-links a:hover {
+      background: #f97316;
+    }
+
+    .courses-section {
+      padding: 70px 0;
+      background: #fff;
+    }
+
+    .course-group {
+      margin-bottom: 40px;
+    }
+
+    .course-group h3 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #f97316;
+    }
+
+    .course-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .course-item {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .course-item h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .course-item p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 992px) {
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-wrap {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-carousel {
+        height: 350px;
+      }
+
+      .carousel-caption {
+        bottom: 20px;
+        left: 20px;
+        padding: 20px;
+        max-width: 80%;
+      }
+
+      .carousel-caption h2 {
+        font-size: 24px;
+      }
+
+      .carousel-caption p {
+        font-size: 16px;
+      }
+
+      .category-grid,
+      .hot-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-main {
+        display: none;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .footer-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-carousel {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 头部导航 -->
+  <header>
+    <div class="container header-wrap">
+      <div class="logo">Shaolin TCM & Martial Arts</div>
+      <nav class="nav-main">
+        <a href="#home">Home</a>
+        <a href="#categories">Products</a>
+        <a href="#hot">Recommendations</a>
+        <a href="#regional-insights">Regional Insights</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="#cart" class="cart-btn">
+          <i class="fas fa-shopping-cart"></i> Cart (0)
+        </a>
+
+        <!-- 个人中心 + 订单功能 -->
+        <div class="user-menu">
+          <a href="#account" class="user-btn">
+            <i class="fas fa-user"></i>
+          </a>
+          <div class="user-dropdown">
+            <a href="#orders">My Orders</a>
+            <a href="#to-pay">To Be Paid</a>
+            <a href="#to-ship">To Be Shipped</a>
+            <a href="#to-receive">To Be Received</a>
+            <a href="#to-refund">To Be Refunded</a>
+            <a href="#profile">My Profile</a>
+            <a href="#logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- 首屏轮播 -->
+  <section class="hero-carousel" id="home">
+    <div class="carousel-item active">
+      <img src="10.jpg" alt="Baduanjin Book">
+      <div class="carousel-caption">
+        <h2>Wudang Secret Baduanjin</h2>
+        <p>Discover the ancient art of Baduanjin from the Wudang tradition, featuring detailed instructions and
+          authentic techniques.</p>
+        <a href="#hot" class="btn-primary">Explore Courses</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="standing.jpg" alt="Standing Baduanjin">
+      <div class="carousel-caption">
+        <h2>Standing Baduanjin Practice</h2>
+        <p>Experience the power of Shaolin standing exercises for strength, flexibility and inner balance.</p>
+        <a href="#hot" class="btn-primary">Learn More</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="11.webp" alt="Martial Arts">
+      <div class="carousel-caption">
+        <h2>Shaolin Martial Arts</h2>
+        <p>Discover the ancient art of Shaolin kung fu, combining physical discipline with spiritual cultivation.</p>
+        <a href="#categories" class="btn-primary">Explore Collection</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 商品分类 -->
+  <section class="categories" id="categories">
+    <div class="container">
+      <h2 class="section-title">Our Product Categories</h2>
+      <div class="category-grid">
+        <!-- 健康保健 -->
+        <div class="category-card">
+          <div class="image-container">
+            <img src="1.jpg" alt="Health & Wellness Products" class="category-img">
+            <img src="7.jpg" alt="Health & Wellness Products" class="category-img hover-img">
+          </div>
+          <div class="category-content">
+            <h3>Health & Wellness</h3>
+            <p>Natural patches, herbal teas and wellness products designed to support digestive health, relieve stress
+              and boost vitality.</p>
+            <a href="#" class="btn-primary">Shop Collection</a>
+          </div>
+        </div>
+        <!-- 文创周边 -->
+        <div class="category-card">
+          <div class="image-container">
+            <img src="2.jpg" alt="Cultural Goods" class="category-img">
+            <img src="4.jpg" alt="Cultural Goods" class="category-img hover-img">
+          </div>
+          <div class="category-content">
+            <h3>Cultural Goods</h3>
+            <p>Authentic Shaolin cultural souvenirs, including prayer beads, traditional handicrafts and martial arts
+              equipment.</p>
+            <a href="#" class="btn-primary">Shop Collection</a>
+          </div>
+        </div>
+        <!-- 书籍典藏 -->
+        <div class="category-card">
+          <div class="image-container">
+            <img src="9.jpg" alt="Books & Collections" class="category-img">
+            <img src="10.jpg" alt="Books & Collections" class="category-img hover-img">
+          </div>
+          <div class="category-content">
+            <h3>Books & Collections</h3>
+            <p>Traditional Shaolin medical texts, martial arts manuals and cultural books (English translated editions).
+            </p>
+            <a href="#" class="btn-primary">Shop Collection</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 热门推荐（站式+坐式八段锦 · 无价格） -->
+  <section class="hot-recommend" id="hot">
+    <div class="container">
+      <h2 class="section-title">Hot Recommendations</h2>
+      <div class="hot-grid">
+        <!-- 站式八段锦 -->
+        <div class="hot-card">
+          <img src="standing.jpg" alt="Standing Baduanjin">
+          <div class="hot-info">
+            <h3 class="hot-title">Standing Baduanjin</h3>
+            <p class="hot-desc">Authentic Shaolin Standing Baduanjin Qigong for full body fitness, meridian activation
+              and vitality improvement. Suitable for all ages and fitness levels.</p>
+          </div>
+        </div>
+        <!-- 坐式八段锦 -->
+        <div class="hot-card">
+          <img src="sitting.jpg" alt="Sitting Baduanjin">
+          <div class="hot-info">
+            <h3 class="hot-title">Sitting Baduanjin</h3>
+            <p class="hot-desc">Gentle Shaolin Sitting Baduanjin for relaxation, meditation and inner balance. Perfect
+              for office workers, seniors and those with limited mobility.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 区域特点板块 -->
+  <section class="regional-insights" id="regional-insights">
+    <div class="container">
+      <h2 class="section-title">Regional TCM & Martial Arts Characteristics</h2>
+
+      <!-- 澳大利亚 -->
+      <div class="country-card">
+        <h3><i class="fas fa-flag-au"></i> Australia (Oceania)</h3>
+        <h4>Popularity & Penetration</h4>
+        <p>TCM and Chinese martial arts have high acceptance in Australia, with over 1.2 million Australians using TCM
+          services annually (2025 data). Tai Chi and Qigong are widely practiced in community centers, retirement
+          villages, and fitness clubs across major cities like Sydney, Melbourne, and Brisbane.</p>
+        <ul class="feature-list">
+          <li>Baduanjin is included in senior wellness programs in 80% of Australian local councils</li>
+          <li>Over 3,000 registered TCM practitioners across the country</li>
+          <li>Martial arts schools focus on health/fitness rather than combat, aligning with local wellness trends</li>
+        </ul>
+        <h4>Policy & Development</h4>
+        <p>Australia has standardized TCM regulation through the Chinese Medicine Board of Australia (CMBA), requiring
+          national registration for practitioners since 2012. Martial arts are recognized as a valid physical activity
+          in national health promotion policies.</p>
+        <ul class="feature-list">
+          <li>TCM is covered by some private health insurance plans</li>
+          <li>Government-funded research into TCM for chronic pain management</li>
+          <li>Multicultural policies support TCM/martial arts cultural exchange programs</li>
+        </ul>
+        <h4>Localized Characteristics</h4>
+        <p>Australian TCM integrates local herbal resources (e.g., native bush medicines) with traditional Chinese
+          formulas. Martial arts programs emphasize outdoor practice, adapting to Australia's active lifestyle and
+          natural environment.</p>
+      </div>
+
+      <!-- 新加坡 -->
+      <div class="country-card">
+        <h3><i class="fas fa-flag-sg"></i> Singapore (Southeast Asia)</h3>
+        <h4>Popularity & Penetration</h4>
+        <p>TCM is deeply rooted in Singapore's multicultural society, with 70% of the Chinese population using TCM
+          services regularly. Wushu (Chinese martial arts) is a national sport, with over 50,000 registered
+          practitioners and school-based training programs.</p>
+        <ul class="feature-list">
+          <li>TCM clinics are available in all public hospital clusters</li>
+          <li>Wushu is part of the Singapore Sports School curriculum</li>
+          <li>Qigong classes are offered in all community centers island-wide</li>
+        </ul>
+        <h4>Policy & Development</h4>
+        <p>Singapore's Ministry of Health (MOH) established the TCM Practitioners Board in 2000, implementing strict
+          licensing and quality control. The government invests in TCM research through the Singapore TCM Research
+          Institute (STCMRI).</p>
+        <ul class="feature-list">
+          <li>TCM is integrated into Singapore's national healthcare system</li>
+          <li>Government funding for TCM-martial arts integration programs for mental health</li>
+          <li>Wushu is supported by the Singapore Sports Council for international competitions</li>
+        </ul>
+        <h4>Localized Characteristics</h4>
+        <p>Singaporean TCM focuses on tropical climate adaptations (e.g., heat-clearing formulas) and evidence-based
+          practice. Martial arts training combines traditional techniques with modern sports science, emphasizing injury
+          prevention and performance optimization.</p>
+      </div>
+
+      <!-- 日本 -->
+      <div class="country-card">
+        <h3><i class="fas fa-flag-jp"></i> Japan (East Asia)</h3>
+        <h4>Popularity & Penetration</h4>
+        <p>Japanese Kampo (adapted TCM) is fully integrated into the national healthcare system, with 148 Kampo formulas
+          covered by national health insurance. Chinese martial arts (especially Tai Chi and Kenpo) are practiced by
+          over 2 million Japanese, primarily in senior wellness programs.</p>
+        <ul class="feature-list">
+          <li>Kampo is prescribed by 70% of Japanese medical doctors for chronic conditions</li>
+          <li>Tai Chi is part of national anti-frailty programs for the elderly</li>
+          <li>Martial arts dojos focus on discipline and mental wellness</li>
+        </ul>
+        <h4>Policy & Development</h4>
+        <p>Japan's Ministry of Health, Labour and Welfare (MHLW) officially recognized Kampo in 1967, with strict
+          manufacturing standards for herbal medicines. Martial arts are regulated through the Japan Sports Agency, with
+          national certification systems.</p>
+        <ul class="feature-list">
+          <li>Kampo insurance coverage includes 90% of consultation fees</li>
+          <li>Government-funded research into Kampo for stress-related disorders</li>
+          <li>Martial arts are part of school physical education curriculum</li>
+        </ul>
+        <h4>Localized Characteristics</h4>
+        <p>Japanese Kampo simplifies TCM formulas for standardized production and evidence-based use. Chinese martial
+          arts are adapted with Japanese martial ethics (bushido), emphasizing mental discipline and minimal movement
+          efficiency (in line with Zen philosophy).</p>
+      </div>
+    </div>
+  </section>
+  <!-- 课程板块 -->
+  <section class="courses-section" id="courses">
+    <div class="container">
+      <h2 class="section-title">Our Courses</h2>
+
+      <!-- 大洋洲 -->
+      <div class="course-group">
+        <h3>Oceania</h3>
+        <div class="course-list">
+          <div class="course-item">
+            <h4>Sub-health & Chronic Pain Management</h4>
+            <p>Australia Basic Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Gentle Wellness Qigong (Tai Chi & Baduanjin)</h4>
+            <p>Australia & New Zealand Basic</p>
+          </div>
+          <div class="course-item">
+            <h4>Dampness & Fatigue Conditioning</h4>
+            <p>New Zealand Basic Course</p>
+          </div>
+          <div class="course-item">
+            <h4>TCM Basic Theory</h4>
+            <p>Advanced Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Herbal Identification & Local Herb Application</h4>
+            <p>Advanced Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Special Group Rehabilitation</h4>
+            <p>Practical Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Multicultural Integration Class</h4>
+            <p>Practical Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Workplace Health Program</h4>
+            <p>New Zealand Practical</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 东南亚 -->
+      <div class="course-group">
+        <h3>Southeast Asia</h3>
+        <div class="course-list">
+          <div class="course-item">
+            <h4>Common Conditions in Hot Humid Climate</h4>
+            <p>Singapore Basic</p>
+          </div>
+          <div class="course-item">
+            <h4>Dampness & Heat Cleansing for Tropical Climate</h4>
+            <p>Malaysia Basic</p>
+          </div>
+          <div class="course-item">
+            <h4>Basic Diet & Meridian Health</h4>
+            <p>Basic Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Halal-Friendly Medicated Cuisine</h4>
+            <p>Malaysia Practical</p>
+          </div>
+          <div class="course-item">
+            <h4>TCM Basic Theory</h4>
+            <p>Advanced Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Herbal Identification</h4>
+            <p>Advanced Course</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 东亚 -->
+      <div class="course-group">
+        <h3>East Asia</h3>
+        <div class="course-list">
+          <div class="course-item">
+            <h4>Kampo vs TCM Comparative Study</h4>
+            <p>Japan Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Japanese Acupuncture & Tuina</h4>
+            <p>Japan Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Martial Etiquette & Tai Chi</h4>
+            <p>East Asia Course</p>
+          </div>
+          <div class="course-item">
+            <h4>Yin-Yang & Five Elements Philosophy</h4>
+            <p>General Course</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 页脚 -->
+  <footer>
+    <div class="container">
+      <div class="footer-wrap">
+        <div class="footer-col">
+          <h4>About Us</h4>
+          <ul>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Shaolin Heritage</a></li>
+            <li><a href="#">Global Partners</a></li>
+            <li><a href="#">Sustainability</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="#categories">Health & Wellness</a></li>
+            <li><a href="#categories">Cultural Goods</a></li>
+            <li><a href="#categories">Books & Collections</a></li>
+            <li><a href="#">Special Offers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping & Returns</a></li>
+            <li><a href="#">Payment Methods</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect With Us</h4>
+          <ul>
+            <li><a href="#">info@shaolinwellness.com</a></li>
+            <li><a href="#">+86 123 4567 8910</a></li>
+            <li><a href="#">Shaolin Temple, Henan, China</a></li>
+          </ul>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        © 2026 Shaolin TCM & Martial Arts Global. All rights reserved. | Designed for International Users
+      </div>
+    </div>
+  </footer>
+
+  <!-- 轮播JS -->
+  <script>
+    // 轮播图自动切换
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+    function showSlide(index) {
+      carouselItems.forEach(item => item.classList.remove('active'));
+      carouselItems[index].classList.add('active');
+    }
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % carouselItems.length;
+      showSlide(currentIndex);
+    }
+    showSlide(currentIndex);
+    setInterval(nextSlide, 5000);
+  </script>
+
+</body>
+
+</html>
